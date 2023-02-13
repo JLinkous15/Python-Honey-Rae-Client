@@ -39,8 +39,8 @@ export const TicketList = () => {
         }
     }
 
-    const filterTickets = (status) => {
-        fetchIt(`http://localhost:8000/tickets?status=${status}`)
+    const filterTickets = (queryKey, queryValue) => {
+        fetchIt(`http://localhost:8000/tickets?${queryKey}=${queryValue}`)
             .then((tickets) => {
                 setOriginal(tickets)
             })
@@ -49,10 +49,22 @@ export const TicketList = () => {
 
     return <>
         <div>
-            <button onClick={() => filterTickets("done")}>Show Done</button>
-            <button onClick={() => filterTickets("all")}>Show All</button>
+            <button onClick={() => filterTickets("status","done")}>Show Done</button>
+            <button onClick={() => filterTickets("status","all")}>Show All</button>
             <button onClick={() => history.push('/tickets/create')}>Create New Ticket</button>
+            <button onClick={() => filterTickets("status","unclaimed")}>Show Unclaimed</button>
+            <button onClick={() => filterTickets("status","inprogress")}>Show In Progress</button>
         </div>
+        {
+            isStaff()
+                ?<input 
+                    type="text" 
+                    placeHolder="Search for a ticket"
+                    onChange={(e)=>{
+                        filterTickets("description",e.target.value)
+                    }}></input>
+                :""
+        }
         <div className="actions">{toShowOrNotToShowTheButton()}</div>
         <div className="activeTickets">{active}</div>
         <article className="tickets">
