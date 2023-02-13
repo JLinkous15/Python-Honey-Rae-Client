@@ -38,7 +38,7 @@ export const TicketForm = () => {
                         type="text" id="description"
                         className="form-control"
                         placeholder="Brief description of problem"
-                         />
+                        />
                 </div>
             </fieldset>
             <fieldset>

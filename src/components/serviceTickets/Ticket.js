@@ -79,6 +79,17 @@ export const Ticket = () => {
         }
     }
 
+    const markDone = (e) => {
+        e.preventDefault()
+        const copy = {...ticket, date_completed : new Date().toISOString().slice(0, 10)}
+        fetchIt(`http://localhost:8000/tickets/${ticketId}`, {
+            method : "PUT", 
+            body: JSON.stringify(copy)
+            }
+        ).then(fetchTicket)
+
+    }
+
     return (
         <>
             <section className="ticket">
@@ -91,7 +102,7 @@ export const Ticket = () => {
                         {
                             ticket.date_completed === null
                                 ? employeePicker(ticket)
-                                : `Completed by ${ticket.employee?.name} on ${ticket.date_completed}`
+                                : `Completed by ${ticket.employee?.full_name} on ${ticket.date_completed}`
                         }
                     </div>
                     <div className="footerItem">
@@ -99,7 +110,7 @@ export const Ticket = () => {
                     </div>
                     {
                         isStaff()
-                            ? ""
+                            ? <button onClick={(e)=>{markDone(e)}}>Mark Done</button>
                             : <button onClick={deleteTicket}>Delete</button>
                     }
                 </footer>

@@ -51,6 +51,7 @@ export const TicketList = () => {
         <div>
             <button onClick={() => filterTickets("done")}>Show Done</button>
             <button onClick={() => filterTickets("all")}>Show All</button>
+            <button onClick={() => history.push('/tickets/create')}>Create New Ticket</button>
         </div>
         <div className="actions">{toShowOrNotToShowTheButton()}</div>
         <div className="activeTickets">{active}</div>
